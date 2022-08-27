@@ -1,41 +1,41 @@
 package com.futurasoft.proyecto;
 
 public class Empresa {
-    private String Nombre;
-    private String Direccion;
-    private String Telefono;
-    private String Nit;
+    private String nombre;
+    private String direccion;
+    private String telefono;
+    private String nit;
 
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
     public String getDireccion() {
-        return Direccion;
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
-        Direccion = direccion;
+        this.direccion = direccion;
     }
 
     public String getTelefono() {
-        return Telefono;
+        return telefono;
     }
 
     public void setTelefono(String telefono) {
-        Telefono = telefono;
+        this.telefono = telefono;
     }
 
     public String getNit() {
-        return Nit;
+        return nit;
     }
 
     public void setNit(String nit) {
-        Nit = nit;
+        this.nit = nit;
     }
 }

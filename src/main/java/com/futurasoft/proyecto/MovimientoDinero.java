@@ -1,31 +1,31 @@
 package com.futurasoft.proyecto;
 
 public class MovimientoDinero {
-    private float MontoMovimiento;
-    private String ConceptoMovimiento;
-    private Empleado Usuario;
+    private float montoMovimiento;
+    private String conceptoMovimiento;
+    private Empleado usuario;
 
     public float getMontoMovimiento() {
-        return MontoMovimiento;
+        return montoMovimiento;
     }
 
     public void setMontoMovimiento(float montoMovimiento) {
-        MontoMovimiento = montoMovimiento;
+        this.montoMovimiento = montoMovimiento;
     }
 
     public String getConceptoMovimiento() {
-        return ConceptoMovimiento;
+        return conceptoMovimiento;
     }
 
     public void setConceptoMovimiento(String conceptoMovimiento) {
-        ConceptoMovimiento = conceptoMovimiento;
+        this.conceptoMovimiento = conceptoMovimiento;
     }
 
     public Empleado getUsuario() {
-        return Usuario;
+        return usuario;
     }
 
     public void setUsuario(Empleado usuario) {
-        Usuario = usuario;
+        this.usuario = usuario;
     }
 }
