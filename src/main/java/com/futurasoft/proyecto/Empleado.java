@@ -4,7 +4,7 @@ public class Empleado {
 
     private String nombreEmpleado;
     private String emailEmpleado;
-    private String empresa;
+    private Empresa empresa;
     private String rolEmpleado;
 
 
@@ -24,11 +24,11 @@ public class Empleado {
         this.emailEmpleado = emailEmpleado;
     }
 
-    public String getEmpresa() {
+    public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(String empresa) {
+    public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
