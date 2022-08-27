@@ -37,6 +37,10 @@ public class Empleado {
     }
 
     public void setRolEmpleado(String rolEmpleado) {
-        this.rolEmpleado = rolEmpleado;
+        if (rolEmpleado.equals("administrador")) {
+            this.rolEmpleado = "administrador";
+        } else if (rolEmpleado.equals("operativo")) {
+            this.rolEmpleado = "operativo";
+        }
     }
 }
