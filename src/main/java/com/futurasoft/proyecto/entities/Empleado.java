@@ -1,4 +1,4 @@
-package com.futurasoft.proyecto;
+package com.futurasoft.proyecto.entities;
 
 public class Empleado {
 

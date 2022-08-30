@@ -1,6 +1,10 @@
 package com.futurasoft.proyecto;
 
-public class MainApp {
+import com.futurasoft.proyecto.entities.Empleado;
+import com.futurasoft.proyecto.entities.Empresa;
+import com.futurasoft.proyecto.entities.MovimientoDinero;
+
+public class Pruebas {
     public static void main(String[] args) {
 
         // Ejemplo de la clase Empresa
