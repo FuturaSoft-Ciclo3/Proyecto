@@ -6,40 +6,42 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MovimientoDineroController {
 
-    @RequestMapping ("enterprises/{id}/movements")
-    public Response get(){
+    @GetMapping("enterprises/{id}/movements")
+    public Response get() {
 
         Response response = new Response();
         response.setCode(200);
-        response.setMessage("Vervo get");
+        response.setMessage("Verbo get");
         return response;
 
     }
+
     @PostMapping("enterprises/{id}/movements")
-    public Response post(){
+    public Response post() {
 
         Response response = new Response();
         response.setCode(200);
-        response.setMessage("Vervo post");
+        response.setMessage("Verbo post");
         return response;
 
     }
+
     @PatchMapping("enterprises/{id}/movements")
-    public Response patch(){
+    public Response patch() {
 
         Response response = new Response();
         response.setCode(200);
-        response.setMessage("Vervo patch");
+        response.setMessage("Verbo patch");
         return response;
 
     }
 
     @DeleteMapping("enterprises/{id}/movements")
-    public Response delete(){
+    public Response delete() {
 
         Response response = new Response();
         response.setCode(200);
-        response.setMessage("Vervo delete");
+        response.setMessage("Verbo delete");
         return response;
 
     }

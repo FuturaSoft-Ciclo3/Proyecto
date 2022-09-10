@@ -1,47 +1,47 @@
 package com.futurasoft.proyecto.controllers;
 
-import com.example.proyecto.services.Response;
+import com.futurasoft.proyecto.entities.Empresa;
+import com.futurasoft.proyecto.services.EmpresaService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 public class EmpresaController {
-  //El sistema devuelve responses 200 en la ruta enterprises con los siguientes verbos: GET
-    @RequestMapping("enterprises")
-    public Response get(){
-        Response response = new Response();
-        response.setCode(200);
-        response.setMessage("Vervo get");
-        return response;}
+
+    private EmpresaService empresaService;
+
+    public EmpresaController(EmpresaService empresaService) {
+        this.empresaService = empresaService;
+    }
+
+    //El sistema devuelve responses 200 en la ruta enterprises con los siguientes verbos: GET
+    @GetMapping("enterprises")
+    public ArrayList<Empresa> getEmpresas() {
+        return this.empresaService.getEmpresas();
+    }
 
     //El sistema devuelve responses 200 en la ruta enterprises con los siguientes verbos: POST
     @PostMapping("enterprises")
-    public Response post(){
-        Response response = new Response();
-        response.setCode(200);
-        response.setMessage("Vervo post");
-        return response;}
+    public String createEmpresa(Empresa data) {
+        return this.empresaService.createEmpresa(data);
+    }
 
     //El sistema devuelve responses 200 en la ruta /enterprises/[id] con los siguientes verbos: GET
-    @RequestMapping("enterprises/{id}")
-    public Response getId(){
-        Response response = new Response();
-        response.setCode(200);
-        response.setMessage("Vervo get");
-        return response;}
+    @GetMapping("enterprises/{id}")
+    public Empresa getEmpresa(@PathVariable int id) {
+        return this.empresaService.getEmpresa(id);
+    }
 
     //El sistema devuelve responses 200 en la ruta /enterprises/[id] con los siguientes verbos: PATCH
     @PatchMapping("enterprises/{id}")
-    public Response patchId(){
-        Response response = new Response();
-        response.setCode(200);
-        response.setMessage("Vervo patch");
-        return response;}
+    public String updateEmpresa(@RequestBody Empresa data) {
+        return this.empresaService.updateEmpresa(data);
+    }
 
     //El sistema devuelve responses 200 en la ruta /enterprises/[id] con los siguientes verbos: DELETE
-    @DeleteMapping ("enterprises/{id}")
-    public Response delete(){
-        Response response = new Response();
-        response.setCode(200);
-        response.setMessage("Vervo delete");
-        return response;}
+    @DeleteMapping("enterprises/{id}")
+    public String deleteEmpresa(@PathVariable int id) {
+        return this.empresaService.deleteEmpresa(id);
+    }
 }
