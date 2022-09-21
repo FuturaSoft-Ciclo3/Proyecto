@@ -1,74 +1,94 @@
 package com.futurasoft.proyecto.services;
 
 import com.futurasoft.proyecto.entities.Empleado;
-import com.futurasoft.proyecto.entities.Empresa;
+import com.futurasoft.proyecto.repository.IEmpleadoRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
+import java.util.Optional;
+
+import static com.futurasoft.proyecto.services.Validation.isEmailValid;
 
 @Service
 public class EmpleadoService {
 
-    Empleado empleado;
-    Empresa empresa;
-    ArrayList<Empleado> empleados;
+    @Autowired
+    IEmpleadoRepository empleadoRepository;
 
-    public EmpleadoService() {
-        this.empleado = new Empleado();
-        this.empresa = new Empresa();
+
+    // Muestra todos los empleados
+    public ArrayList<Empleado> getEmpleados() {
+        return (ArrayList<Empleado>) this.empleadoRepository.findAll();
     }
 
+    // Muestra un empleado
+    public Empleado getEmpleadoById(long id) {
+        Optional<Empleado> empleado = this.empleadoRepository.findById(id);
+        return empleado.orElse(null);
 
-
-    public ArrayList<Empleado> listaEmpleados() {
-        Empleado empleado1 = new Empleado();
-        empleado1.setNombreEmpleado("pepito perez");
-        empleado1.setEmailEmpleado("pepito@correo.com");
-        empleado1.setEmpresa(this.empresa);
-        empleado1.setRolEmpleado("administrador");
-        Empleado empleado2 = new Empleado();
-        empleado2.setNombreEmpleado("juan perez");
-        empleado2.setEmailEmpleado("juan@correo.com");
-        empleado2.setEmpresa(this.empresa);
-        empleado2.setRolEmpleado("operativo");
-        Empleado empleado3 = new Empleado();
-        empleado3.setNombreEmpleado("carlos fayad");
-        empleado3.setEmailEmpleado("carlos@correo.com");
-        empleado3.setEmpresa(this.empresa);
-        empleado3.setRolEmpleado("operativo");
-        empleados = new ArrayList<>();
-        this.empleados.add(empleado1);
-        this.empleados.add(empleado2);
-        this.empleados.add(empleado3);
-        return empleados;
     }
 
-    public ArrayList<Empleado> getEmpleados(){
-        return listaEmpleados();
-    }
-    public Empleado getEmpleado(int id) {
-        return listaEmpleados().get(id);
-    }
-
+    // Crea un empleado
     public String createEmpleado(Empleado data) {
-        this.empleados.add(data);
-        //listaEmpleados().add(data);
+        ArrayList<Empleado> empleados = this.empleadoRepository.existeCorreo(data.getEmailEmpleado());
+        if (empleados != null && empleados.size() > 0) {
+            return "El correo electrónico ya está en uso";
+        }
+
+        // comprobar email
+        System.out.println(data.getEmailEmpleado());
+        if (!isEmailValid(data.getEmailEmpleado())) {
+            return "El correo electrónico no es válido";
+        }
+
+        // comprobar contraseña
+        if (data.getPassword() == null || data.getPassword().equals("")) {
+            return "Error, su contraseña no es válida";
+        }
+
+        //BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
+        //data.setPassword(encrypt.encode(data.getPassword()));
+        data.setPassword(data.getPassword());
+
+        this.empleadoRepository.save(data);
         return "empleado agregado";
+
     }
 
-    public String updateEmpleado(Empleado data){
-        for (int i = 0; i < listaEmpleados().size(); i++) {
-            if(data.getEmailEmpleado().equals(listaEmpleados().get(i).getEmailEmpleado())){
-                listaEmpleados().get(i).setNombreEmpleado(data.getNombreEmpleado());
-                listaEmpleados().get(i).setEmailEmpleado(data.getEmailEmpleado());
-                listaEmpleados().get(i).setEmpresa(data.getEmpresa());
-                listaEmpleados().get(i).setRolEmpleado(data.getRolEmpleado());
-            }
+    // Actualiza o modifica un empleado
+    public String updateEmpleado(Empleado data) {
+        if (data.getId() == 0) {
+            return "Error, el id del usuario no es válido";
         }
+
+        // validar si el empleado existe
+        Empleado empleado = getEmpleadoById(data.getId());
+        if (empleado == null)
+            return "Error, el empleado no existe";
+
+        if (data.getEmailEmpleado() == null || data.getEmailEmpleado().equals(""))
+            return "Error, el correo electrónico está vacío";
+
+        if (!isEmailValid(data.getEmailEmpleado()))
+            return "Error, ingrese un correo electrónico válido";
+
+        empleado.setEmailEmpleado(data.getEmailEmpleado());
+        //agregar aquí los otros campos que se requieren actualizar
+
+        this.empleadoRepository.save(empleado);
+
         return "empleado actualizado";
     }
 
-    public String deleteEmpleado(int id){
-        listaEmpleados().remove(id);
-        return "empleado eliminado";
+    // Elimina un empleado
+    public String deleteEmpleado(long id) {
+        try {
+            this.empleadoRepository.deleteById(id);
+            return "empleado eliminado";
+        } catch (Exception e) {
+            return "Error" + e;
+        }
     }
 }

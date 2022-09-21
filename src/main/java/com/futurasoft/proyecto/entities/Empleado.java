@@ -1,46 +1,41 @@
 package com.futurasoft.proyecto.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity
+@Table(name = "employee")
+@Getter
+@Setter
 public class Empleado {
 
-    private String nombreEmpleado;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "email", unique = true)
     private String emailEmpleado;
+    @Column(name = "password")
+    private String password;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
+    @JsonIgnoreProperties("user")
+    private Profile profile;
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
-    private String rolEmpleado;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private EnumRoleName rolEmpleado;
 
+    @OneToMany(mappedBy = "empleado")
+    private List<Transaction> transactions;
+    @Column(name = "updated_at")
+    private LocalDate updatedAt;
 
-    public String getNombreEmpleado() {
-        return nombreEmpleado;
-    }
-
-    public void setNombreEmpleado(String nombreEmpleado) {
-        this.nombreEmpleado = nombreEmpleado;
-    }
-
-    public String getEmailEmpleado() {
-        return emailEmpleado;
-    }
-
-    public void setEmailEmpleado(String emailEmpleado) {
-        this.emailEmpleado = emailEmpleado;
-    }
-
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
-    public String getRolEmpleado() {
-        return rolEmpleado;
-    }
-
-    public void setRolEmpleado(String rolEmpleado) {
-        if (rolEmpleado.equals("administrador")) {
-            this.rolEmpleado = "administrador";
-        } else if (rolEmpleado.equals("operativo")) {
-            this.rolEmpleado = "operativo";
-        }
-    }
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 }

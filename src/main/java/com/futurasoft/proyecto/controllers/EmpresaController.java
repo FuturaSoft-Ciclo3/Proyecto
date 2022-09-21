@@ -29,8 +29,8 @@ public class EmpresaController {
 
     //El sistema devuelve responses 200 en la ruta /enterprises/[id] con los siguientes verbos: GET
     @GetMapping("enterprises/{id}")
-    public Empresa getEmpresa(@PathVariable int id) {
-        return this.empresaService.getEmpresa(id);
+    public Empresa getEmpresa(@PathVariable long id) {
+        return this.empresaService.getEmpresaById(id);
     }
 
     //El sistema devuelve responses 200 en la ruta /enterprises/[id] con los siguientes verbos: PATCH
@@ -41,7 +41,7 @@ public class EmpresaController {
 
     //El sistema devuelve responses 200 en la ruta /enterprises/[id] con los siguientes verbos: DELETE
     @DeleteMapping("enterprises/{id}")
-    public String deleteEmpresa(@PathVariable int id) {
+    public String deleteEmpresa(@PathVariable long id) {
         return this.empresaService.deleteEmpresa(id);
     }
 }
